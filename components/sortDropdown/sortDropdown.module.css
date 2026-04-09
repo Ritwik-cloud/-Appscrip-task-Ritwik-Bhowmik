@@ -1,0 +1,70 @@
+.sortWrapper {
+    position: relative;
+    cursor: pointer;
+    min-width: 250px;
+    text-align: right;
+}
+
+.dropdownHeader {
+    display: flex;
+    align-items: center; /* Vertically centers the text and icon */
+    justify-content: flex-end; /* Aligns everything to the right to match your screenshot */
+    gap: 8px; /* Adds consistent spacing between text and arrow */
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    user-select: none;
+}
+
+.arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Ensure the Lucide icon doesn't inherit weird line-heights */
+.arrow svg {
+    display: block;
+}
+
+.dropdownList {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    list-style: none;
+    padding: 20px 0;
+    margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    z-index: 100;
+    width: 280px;
+    text-align: right;
+}
+
+.dropdownItem {
+    padding: 12px 25px;
+    font-size: 14px;
+    font-weight: 400;
+    transition: background 0.2s;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.dropdownItem:hover {
+    background: #f9f9f9;
+}
+
+.dropdownItem.active {
+    font-weight: 700;
+}
+
+.checkmark {
+    font-size: 14px;
+    font-weight: 700;
+}
+

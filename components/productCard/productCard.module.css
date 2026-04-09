@@ -1,0 +1,109 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Image Container */
+.imageWrapper {
+    position: relative;
+    aspect-ratio: 1 / 1.2;
+    background-color: #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.cardImg {
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .cardImg {
+    transform: scale(1.05);
+}
+
+/* Overlay for Stock Status */
+.outOfStockOverlay {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    text-align: center;
+    padding: 15px 0;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+/* Info Section */
+.productInfo {
+    padding: 16px 0 8px 0;
+}
+
+.productName {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+    color: #252020;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Limits title to one line */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Metadata, Price & Favorite */
+.productMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.pricing {
+    flex: 1;
+}
+
+.priceText {
+    font-size: 12px;
+    color: #888;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.underline {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #252020;
+}
+
+.actualPrice {
+    font-size: 15px;
+    font-weight: 700;
+    color: #252020;
+    margin-top: 4px;
+}
+
+.favoriteBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #252020;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.favoriteBtn:hover {
+    color: #eb4d4b; /* Subtle red on hover */
+}

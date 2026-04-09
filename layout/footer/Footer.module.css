@@ -1,0 +1,143 @@
+.footer {
+    background-color: #000;
+    color: #fff;
+    padding: 80px 40px 20px 40px;
+    font-family: 'Inter', sans-serif;
+}
+
+.footerContainer {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Top Section: Newsletter and Contact */
+.topSection {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 100px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid #fff;
+}
+
+.newsletter h3, .contact h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.newsletter p {
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.inputGroup {
+    display: flex;
+    gap: 15px;
+}
+
+.emailInput {
+    padding: 12px 15px;
+    width: 300px;
+    border: none;
+    font-size: 14px;
+}
+
+.subscribeBtn {
+    background: transparent;
+    border: 1px solid #666;
+    color: #666;
+    padding: 0 30px;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Bottom Section: Links and Socials */
+.bottomSection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    padding-top: 60px;
+}
+
+.column h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.column li {
+    font-size: 14px;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+/* Payment Icons */
+.paymentList {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.paymentIcon {
+    background: #fff;
+    border-radius: 4px;
+    padding: 4px 8px;
+    height: 25px;
+    width: auto;
+}
+
+.copyright {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 80px;
+    color: #888;
+}
+.paymentWrapper {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.paymentTitle {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #252020;
+    text-transform: uppercase;
+}
+
+.paymentList {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap; 
+}
+
+/* CRITICAL STYLING FOR FILL LAYOUT */
+.paymentIconContainer {
+    position: relative;
+    width: 35px;
+    height: 35px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .topSection, .bottomSection {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .emailInput {
+        width: 100%;
+    }
+}
