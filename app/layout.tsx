@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     title: "Mettamuse | Discover Our Products",
     description:
       "Browse Mettamuse's curated collection of men's clothing, women's clothing, jewellery and electronics.",
-    url: "https://your-netlify-url.netlify.app",
+    url: "https://appscrip-task-ritwik-bhowmik.vercel.app",
     siteName: "Mettamuse",
     type: "website",
   },
