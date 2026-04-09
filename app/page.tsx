@@ -10,7 +10,7 @@ import { PageProps } from "@/typeScript/interface";
 import SidebarLayout from "@/components/sidebarLayout/sidebarLayout";
 import { Suspense } from "react";
 
-// searchParams is a Promise
+
 
 async function getProducts(
   sort: string,
@@ -21,7 +21,7 @@ async function getProducts(
 
     let url = endPoints.allProducts;
     if (category && category !== "all") {
-      url = `${endPoints.allProducts}?category=${category.toLowerCase()}`;
+      url = `${endPoints.allProducts}/category/${category.toLowerCase()}`;
     }
 
     const res = await AxiosInstance.get(url);

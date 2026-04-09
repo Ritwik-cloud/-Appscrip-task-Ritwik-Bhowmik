@@ -21,6 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px"
           className={styles.cardImg}
         />
+        {/* currently hardcoded the outOfStock */}
         {product.id === 2 && (
           <div className={styles.outOfStockOverlay}>OUT OF STOCK</div>
         )}

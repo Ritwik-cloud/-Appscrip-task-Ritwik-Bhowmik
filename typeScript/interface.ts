@@ -34,3 +34,7 @@ export interface Product {
 export interface PageProps {
   searchParams: Promise<{ sort?: string; category?: string }>;
 }
+
+export interface SortDropdownProps {
+  defaultValue: string;
+}

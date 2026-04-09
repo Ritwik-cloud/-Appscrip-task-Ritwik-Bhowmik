@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import styles from './sortDropdown.module.css'; 
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { SortDropdownProps } from '@/typeScript/interface';
 
 const SORT_OPTIONS = [
   { label: 'RECOMMENDED', value: 'recommended' },
@@ -13,9 +14,6 @@ const SORT_OPTIONS = [
   { label: 'PRICE : LOW TO HIGH', value: 'price-low' },
 ];
 
-interface SortDropdownProps {
-  defaultValue: string;
-}
 
 export default function SortDropdown({ defaultValue }: SortDropdownProps) {
   const router = useRouter();
