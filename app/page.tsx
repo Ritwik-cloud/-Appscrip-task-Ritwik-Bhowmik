@@ -13,27 +13,20 @@ const ProductCard = NextDynamic(() => import("@/components/productCard/productCa
 
 async function getProducts(sort: string, category?: string): Promise<Product[]> {
   try {
-    const baseUrl = "https://fakestoreapi.com/products";
-    const url =
-      category && category !== "all"
-        ? `${baseUrl}/category/${category.toLowerCase()}`
-        : baseUrl;
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000";
 
-    console.log("==> Fetching from:", url);
+    const params = new URLSearchParams();
+    if (category && category !== "all") params.set("category", category);
 
-    const res = await fetch(url, { cache: "no-store" });
+    const res = await fetch(`${baseUrl}/api/products?${params}`, {
+      cache: "no-store",
+    });
 
-    console.log("==> Response status:", res.status);
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("==> Error body:", errorText);
-      return [];
-    }
+    if (!res.ok) return [];
 
     const products: Product[] = await res.json();
-
-    console.log("==> Products count:", products.length);
 
     if (sort === "price-low") products.sort((a, b) => a.price - b.price);
     else if (sort === "price-high") products.sort((a, b) => b.price - a.price);
@@ -42,9 +35,7 @@ async function getProducts(sort: string, category?: string): Promise<Product[]> 
 
     return products;
   } catch (error: any) {
-    console.error("==> FETCH FAILED");
-    console.error("==> Error message:", error?.message);
-    console.error("==> Error cause:", error?.cause);
+    console.error("Error:", error?.message);
     return [];
   }
 }
