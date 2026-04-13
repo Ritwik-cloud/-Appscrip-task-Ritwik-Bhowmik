@@ -11,23 +11,12 @@ export const runtime = "nodejs";
 
 // Dynamically importing all the components
 
-const SortDropdown = dynamic(() => import("@/components/sortDropdown/sortDropdown"), {
-  ssr: true,
-  
-});
-const MainLayout = dynamic(() => import("@/components/mainLayout/mainLayout"), {
-  ssr: true, 
-});
 
-const SidebarLayout = dynamic(() => import("@/components/sidebarLayout/sidebarLayout"), {
- 
- 
-});
-
-
-const ProductCard = dynamic(() => import("@/components/productCard/productCard"), {
-  ssr: true,
-});
+// Keep your dynamic imports
+const SortDropdown = dynamic(() => import("@/components/sortDropdown/sortDropdown"), { ssr: true });
+const MainLayout = dynamic(() => import("@/components/mainLayout/mainLayout"), { ssr: true });
+const SidebarLayout = dynamic(() => import("@/components/sidebarLayout/sidebarLayout"));
+const ProductCard = dynamic(() => import("@/components/productCard/productCard"), { ssr: true });
 
 // async function getProducts(
 //   sort: string,
@@ -77,28 +66,27 @@ const ProductCard = dynamic(() => import("@/components/productCard/productCard")
 
 async function getProducts(sort: string, category?: string): Promise<Product[]> {
   try {
-    const baseUrl = "https://fakestoreapi.com/products";
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-    const url =
-      category && category !== "all"
-        ? `${baseUrl}/category/${category}`
-        : baseUrl;
+    const params = new URLSearchParams();
+    if (category && category !== "all") params.set("category", category);
 
-    console.log("Fetching:", url);
+    const res = await fetch(`${baseUrl}/api/products?${params}`, {
+      cache: "no-store",
+    });
 
-    const res = await fetch(url, { cache: "no-store" });
-
-    if (!res.ok) {
-      const text = await res.text();
-      console.error("Fetch failed:", res.status, text);
-      return [];
-    }
+    if (!res.ok) return [];
 
     const products: Product[] = await res.json();
 
+    if (sort === "price-low") products.sort((a, b) => a.price - b.price);
+    else if (sort === "price-high") products.sort((a, b) => b.price - a.price);
+    else if (sort === "newest") products.sort((a, b) => b.id - a.id);
+    else if (sort === "popular") products.sort((a, b) => b.rating.rate - a.rating.rate);
+
     return products;
   } catch (error) {
-    console.error("API Error:", error);
+    console.error("Error:", error);
     return [];
   }
 }
