@@ -13,20 +13,27 @@ const ProductCard = NextDynamic(() => import("@/components/productCard/productCa
 
 async function getProducts(sort: string, category?: string): Promise<Product[]> {
   try {
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000";
+    const baseUrl = "https://fakestoreapi.com/products";
+    const url =
+      category && category !== "all"
+        ? `${baseUrl}/category/${category.toLowerCase()}`
+        : baseUrl;
 
-    const params = new URLSearchParams();
-    if (category && category !== "all") params.set("category", category);
+    console.log("==> Fetching from:", url);
 
-    const res = await fetch(`${baseUrl}/api/products?${params}`, {
-      cache: "no-store",
-    });
+    const res = await fetch(url, { cache: "no-store" });
 
-    if (!res.ok) return [];
+    console.log("==> Response status:", res.status);
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("==> Error body:", errorText);
+      return [];
+    }
 
     const products: Product[] = await res.json();
+
+    console.log("==> Products count:", products.length);
 
     if (sort === "price-low") products.sort((a, b) => a.price - b.price);
     else if (sort === "price-high") products.sort((a, b) => b.price - a.price);
@@ -34,12 +41,13 @@ async function getProducts(sort: string, category?: string): Promise<Product[]> 
     else if (sort === "popular") products.sort((a, b) => b.rating.rate - a.rating.rate);
 
     return products;
-  } catch (error) {
-    console.error("Error:", error);
+  } catch (error: any) {
+    console.error("==> FETCH FAILED");
+    console.error("==> Error message:", error?.message);
+    console.error("==> Error cause:", error?.cause);
     return [];
   }
 }
-
 export default async function Page({ searchParams }: PageProps) {
   const resolvedParams = await searchParams;
   const sortValue = resolvedParams.sort || "recommended";
