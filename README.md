@@ -1,36 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Why is there a `route.ts` file?
 
-## Getting Started
+## Problem
 
-First, run the development server:
+This project uses [Fake Store API](https://fakestoreapi.com) to fetch products.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+When deployed on Vercel, the API calls were failing silently and returning an empty array `[]` — even though everything worked perfectly on localhost.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Root Cause
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`fakestoreapi.com` blocks requests coming from Vercel/Netlify server IP ranges. This is common with free public APIs to prevent abuse.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Solution
 
-## Learn More
+Created a custom Next.js route handler at `app/api/products/route.ts` that acts as a proxy:
 
-To learn more about Next.js, take a look at the following resources:
+1. The page (`page.tsx`) calls `/api/products` — our own internal API
+2. The route handler calls `fakestoreapi.com` via [allorigins.win](https://api.allorigins.win) — a free CORS proxy
+3. The proxy bypasses the IP block and returns the data successfully
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
