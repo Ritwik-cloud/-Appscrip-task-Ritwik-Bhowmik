@@ -1,10 +1,10 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import styles from '../../app/page.module.css';
 import { MainLayoutProps } from '@/typeScript/interface';
 import { X } from 'lucide-react';
 
-export default function MainLayout({ sidebar, productGrid, itemCount, sortElement }: MainLayoutProps) {
+ function MainLayout({ sidebar, productGrid, itemCount, sortElement }: MainLayoutProps) {
   const [showFilter, setShowFilter] = useState<boolean>(true);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -63,3 +63,4 @@ export default function MainLayout({ sidebar, productGrid, itemCount, sortElemen
     </>
   );
 }
+export default memo(MainLayout)

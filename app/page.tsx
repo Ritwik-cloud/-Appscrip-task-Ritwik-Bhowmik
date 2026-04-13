@@ -1,16 +1,30 @@
 import styles from "./page.module.css";
-import Wrapper from "@/layout/wrapper/wrapper";
-import MainLayout from "@/components/mainLayout/mainLayout";
-import SortDropdown from "@/components/sortDropdown/sortDropdown";
-import ProductCard from "@/components/productCard/productCard";
 import { AxiosInstance } from "@/api/axios/axios";
 import { endPoints } from "@/api/endpoints/endpoints";
 import { Product } from "@/typeScript/interface";
 import { PageProps } from "@/typeScript/interface";
-import SidebarLayout from "@/components/sidebarLayout/sidebarLayout";
 import { Suspense } from "react";
+import dynamic from "next/dynamic";
+
+// Dynamically importing all the components
+
+const SortDropdown = dynamic(() => import("@/components/sortDropdown/sortDropdown"), {
+  ssr: true,
+  
+});
+const MainLayout = dynamic(() => import("@/components/mainLayout/mainLayout"), {
+  ssr: true, 
+});
+
+const SidebarLayout = dynamic(() => import("@/components/sidebarLayout/sidebarLayout"), {
+ 
+ 
+});
 
 
+const ProductCard = dynamic(() => import("@/components/productCard/productCard"), {
+  ssr: true,
+});
 
 async function getProducts(
   sort: string,
@@ -60,7 +74,7 @@ export default async function Page({ searchParams }: PageProps) {
   const products = await getProducts(sortValue, categoryValue);
 
   return (
-    <Wrapper>
+ 
       <div className={styles.container}>
         {/*  Hero Section */}
         <section className={styles.heroSection}>
@@ -88,6 +102,6 @@ export default async function Page({ searchParams }: PageProps) {
           }
         />
       </div>
-    </Wrapper>
+   
   );
 }

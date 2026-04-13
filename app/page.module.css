@@ -1,3 +1,4 @@
+/* Layout Container */
 .container {
     max-width: 1400px;
     margin: 0 auto;
@@ -16,6 +17,11 @@
     font-size: 14px;
 }
 
+.filterControls {
+    display: flex;
+    align-items: center;
+}
+
 .filterToggle {
     background: none;
     border: none;
@@ -23,21 +29,32 @@
     text-decoration: underline;
     cursor: pointer;
     margin-left: 20px;
-   
+    text-transform: uppercase;
 }
 
 /* Main Layout */
 .mainLayout {
     display: grid;
-    grid-template-columns: 250px 1fr; /* Fixed sidebar, flexible grid */
-    gap: 40px;
+    grid-template-columns: 1fr; 
+    gap: 0;
     margin-top: 30px;
+    transition: all 0.3s ease;
 }
 
-/* Sidebar */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    width: 100%;
+}
+
+/* Sidebar Styles */
 .sidebar {
     display: flex;
     flex-direction: column;
+    background: white;
+    transition: all 0.3s ease;
 }
 
 .filterGroup {
@@ -53,168 +70,85 @@
     cursor: pointer;
 }
 
-.filterValue {
-    font-size: 13px;
-    color: #252020;
-    margin-top: 5px;
-}
-
-/* Product Grid */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 30px;
-}
-
-
-
-.toggleArrow{
-  margin-right: 10px;
-  
-}
+/* Hero Section */
 .heroSection {
     display: flex;
     flex-direction: column;
     align-items: center;
-   
     margin-top: 100px; 
     margin-bottom: 80px;
     text-align: center;
 }
 
 .heroHeading {
-    /* Layout Specifications */
     width: 100%;
     max-width: 900px; 
-    min-height: 72px;  
-    opacity: 1;
-    
-    /* Typography */
-    font-family: 'Simplon Norm', sans-serif;
     font-weight: 400;
     font-size: 60px;
     line-height: 1.2;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: #252020;
-    /* white-space: nowrap;  */
-    overflow: visible;
     margin: 0 auto;
 }
 
 .heroDescription {
-    /* Layout Specifications */
     width: 100%;
     max-width: 821px; 
-    min-height: 80px;  
-    opacity: 1;
-    
-  
     margin-top: 16px; 
-    margin-left: auto;
-    margin-right: auto;
-
-    /* Typography */
-    font-family: 'Simplon Norm', sans-serif;
     font-size: 22px;
     line-height: 2;
-     letter-spacing: 1px;
+    letter-spacing: 1px;
     color: #252020;
 }
 
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-    .heroSection {
-        margin-top: 40px;
-        padding: 0 16px;
-    }
-    .heroHeading {
-        font-size: 32px;
-        max-width: 100%;
-        min-height: auto;
-    }
-    .heroDescription {
-        font-size: 16px;
-        max-width: 100%;
-        min-height: auto;
-    }
-}
-
-/* //// error page style */
-
-.errorWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 100px 20px;
-    text-align: center;
-}
-
-.errorMessage {
-    color: #888;
-    margin: 16px 0 24px 0;
-    max-width: 400px;
-}
-
-.retryButton {
-    background-color: #252020;
-    color: white;
-    padding: 12px 32px;
-    border: none;
-    text-transform: uppercase;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 1px;
-}
-
-.retryButton:hover {
-    background-color: #000;
-}
-/* Sidebar base styles */
-.sidebar {
-    transition: all 0.3s ease;
-    background: white;
-}
-
-/* DESKTOP */
+/* desktop responsiveness */
 @media (min-width: 769px) {
-    .mainLayout {
-        display: grid;
-        grid-template-columns: 0px 1fr;
-        gap: 0;
-        transition: grid-template-columns 0.3s ease;
-    }
-
+   
     .mainLayout.withSidebar {
         grid-template-columns: 250px 1fr;
         gap: 40px;
+    }
+
+   
+    .withSidebar .grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .sidebarClosed {
         display: none;
     }
 
-    .desktopOnly { display: inline; }
+    .desktopOnly {
+        display: inline;
+    }
 }
 
-/* MOBILE  */
+/* mobile responsiveness */
 @media (max-width: 768px) {
-    .desktopOnly { display: none; }
-
-    .plpHeader {
-        padding: 15px 0;
-        justify-content: space-around;
+    .desktopOnly {
+        display: none;
     }
 
-    .filterToggle {
-        text-decoration: none;
-        color: #252020;
-        font-weight: 700;
+    .heroSection {
+        margin-top: 40px;
+        padding: 0 16px;
     }
 
-    /* Transform Sidebar into a Slide-in Drawer */
+    .heroHeading {
+        font-size: 32px;
+    }
+
+    .heroDescription {
+        font-size: 16px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    /* Sidebar Mobile Drawer */
     .sidebar {
         position: fixed;
         top: 0;
@@ -228,16 +162,7 @@
     }
 
     .sidebarOpen {
-        left: 0; /* Slide in */
-    }
-
-    .mainLayout {
-        grid-template-columns: 1fr; 
-    }
-
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        left: 0;
     }
 
     .backdrop {
@@ -255,18 +180,38 @@
         padding: 10px;
         margin-bottom: 20px;
         background: none;
-        border: 1px solid #ddd;
+        border: none;
         text-align: right;
+        cursor: pointer;
     }
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .grid { grid-template-columns: repeat(2, 1fr); }
+/* Tablet  */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .withSidebar .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-@media (max-width: 768px) {
-    .mainLayout { grid-template-columns: 1fr; }
-    /* .sidebar { display: none; }  */
+
+.errorWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px;
+    text-align: center;
 }
 
+.retryButton {
+    background-color: #252020;
+    color: white;
+    padding: 12px 32px;
+    border: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+}

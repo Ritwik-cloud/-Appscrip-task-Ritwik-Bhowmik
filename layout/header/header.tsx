@@ -1,17 +1,17 @@
 "use client";
 import React, { useState } from 'react';
 import { Search, Heart, ShoppingBag, User, ChevronDown, Menu, X } from 'lucide-react';
-import styles from './Navbar.module.css';
+import styles from './Header.module.css';
 import Image from 'next/image';
 import logo from '../../public/Logo.png';
 import Link from 'next/link';
 
-const Navbar = () => {
+const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
-      {/* Backdrop with X button */}
+     
       {menuOpen && (
         <div
           className={styles.backdrop}
@@ -82,4 +82,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Header;

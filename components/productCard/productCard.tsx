@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Heart } from 'lucide-react'; 
 import styles from './productCard.module.css';
 import { ProductCardProps } from '@/typeScript/interface';
@@ -56,4 +56,4 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default memo(ProductCard);

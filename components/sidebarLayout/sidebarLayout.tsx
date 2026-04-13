@@ -23,8 +23,7 @@ const SidebarLayout: React.FC = () => {
      
       const categoryMap: Record<string, string> = {
         "Men":  "men's clothing",
-        "Women": "women's clothing",
-        "Baby & Kids":"baby and kids",
+        "Women": "women's clothing"
         
       };
       
@@ -40,7 +39,7 @@ const SidebarLayout: React.FC = () => {
   const categories = [
     {
       name: 'IDEAL FOR',
-      options: ["Men", "Women", "Baby & Kids"],
+      options: ["Men", "Women"],
     },
     { name: 'OCCASION', options: ['All'] },
     { name: 'WORK',     options: ['All'] },

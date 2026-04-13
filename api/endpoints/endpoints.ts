@@ -1,3 +1,3 @@
 export const endPoints = {
-  allProducts: 'products'
+  allProducts: '/products'
 }

@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import Navbar from '../header/navbar';
 import Footer from '../footer/footer';
+import Header from '../header/header';
 
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 const Wrapper: React.FC<Props> = ({ children }) => {
   return (
     <>
-      <Navbar />
+      <Header />
       <main>{children}</main>
       <Footer />
     </>
