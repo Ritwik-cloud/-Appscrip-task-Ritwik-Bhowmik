@@ -13,8 +13,8 @@ const ProductCard = NextDynamic(() => import("@/components/productCard/productCa
 
 async function getProducts(sort: string, category?: string): Promise<Product[]> {
   try {
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
+    const baseUrl = process.env.NODE_ENV === "production"
+      ? "https://appscrip-task-ritwik-bhowmik.vercel.app"
       : "http://localhost:3000";
 
     const params = new URLSearchParams();
@@ -39,6 +39,7 @@ async function getProducts(sort: string, category?: string): Promise<Product[]> 
     return [];
   }
 }
+
 export default async function Page({ searchParams }: PageProps) {
   const resolvedParams = await searchParams;
   const sortValue = resolvedParams.sort || "recommended";
