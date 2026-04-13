@@ -6,6 +6,7 @@ import { PageProps } from "@/typeScript/interface";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 // export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 
 // Dynamically importing all the components
@@ -72,35 +73,32 @@ const ProductCard = dynamic(() => import("@/components/productCard/productCard")
 
 
 // 2. Updated getProducts using native fetch
+
+
 async function getProducts(sort: string, category?: string): Promise<Product[]> {
   try {
     const baseUrl = "https://fakestoreapi.com/products";
-    const url = category && category !== "all" 
-      ? `${baseUrl}/category/${category.toLowerCase()}`
-      : baseUrl;
 
-    const res = await fetch(url, {
-      method: "GET",
-     
-      cache: "no-store", 
-    });
+    const url =
+      category && category !== "all"
+        ? `${baseUrl}/category/${category}`
+        : baseUrl;
+
+    console.log("Fetching:", url);
+
+    const res = await fetch(url, { cache: "no-store" });
 
     if (!res.ok) {
-      console.error(`Vercel Fetch Error: ${res.status} ${res.statusText}`);
+      const text = await res.text();
+      console.error("Fetch failed:", res.status, text);
       return [];
     }
 
     const products: Product[] = await res.json();
 
-    // Sorting Logic
-    if (sort === "price-low") products.sort((a, b) => a.price - b.price);
-    else if (sort === "price-high") products.sort((a, b) => b.price - a.price);
-    else if (sort === "newest") products.sort((a, b) => b.id - a.id);
-    else if (sort === "popular") products.sort((a, b) => b.rating.rate - a.rating.rate);
-
     return products;
   } catch (error) {
-    console.error("API Fetch Failure on Vercel:", error);
+    console.error("API Error:", error);
     return [];
   }
 }
