@@ -5,6 +5,8 @@ import { Product } from "@/typeScript/interface";
 import { PageProps } from "@/typeScript/interface";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
+// export const dynamic = "force-dynamic";
+
 
 // Dynamically importing all the components
 
@@ -26,46 +28,82 @@ const ProductCard = dynamic(() => import("@/components/productCard/productCard")
   ssr: true,
 });
 
-async function getProducts(
-  sort: string,
-  category?: string,
-): Promise<Product[]> {
+// async function getProducts(
+//   sort: string,
+//   category?: string,
+// ): Promise<Product[]> {
+//   try {
+//     // calling the api using axios
+
+//     let url = endPoints.allProducts;
+//     if (category && category !== "all") {
+//       url = `${endPoints.allProducts}/category/${category.toLowerCase()}`;
+//     }
+
+//     const res = await AxiosInstance.get(url);
+
+//     if (res.status !== 200) {
+//       console.log(`HTTP error! status: ${res.status}`);
+//       return [];
+//     }
+
+//     // storing the response data
+//     const products: Product[] = res.data;
+
+//     // Sorting Logic
+//     if (sort === "price-low") {
+//       products.sort((a, b) => a.price - b.price);
+//     } else if (sort === "price-high") {
+//       products.sort((a, b) => b.price - a.price);
+//     } else if (sort === "newest") {
+//       products.sort((a, b) => b.id - a.id);
+//     } else if (sort === "popular") {
+//       products.sort((a, b) => b.rating.rate - a.rating.rate);
+//     }
+
+//     return products;
+//   } catch (error: any) {
+//     console.error("Fetch error:", error.message);
+//     return [];
+//   }
+// }
+
+
+
+
+// 2. Updated getProducts using native fetch
+async function getProducts(sort: string, category?: string): Promise<Product[]> {
   try {
-    // calling the api using axios
+    const baseUrl = "https://fakestoreapi.com/products";
+    const url = category && category !== "all" 
+      ? `${baseUrl}/category/${category.toLowerCase()}`
+      : baseUrl;
 
-    let url = endPoints.allProducts;
-    if (category && category !== "all") {
-      url = `${endPoints.allProducts}/category/${category.toLowerCase()}`;
-    }
+    const res = await fetch(url, {
+      method: "GET",
+     
+      cache: "no-store", 
+    });
 
-    const res = await AxiosInstance.get(url);
-
-    if (res.status !== 200) {
-      console.log(`HTTP error! status: ${res.status}`);
+    if (!res.ok) {
+      console.error(`Vercel Fetch Error: ${res.status} ${res.statusText}`);
       return [];
     }
 
-    // storing the response data
-    const products: Product[] = res.data;
+    const products: Product[] = await res.json();
 
     // Sorting Logic
-    if (sort === "price-low") {
-      products.sort((a, b) => a.price - b.price);
-    } else if (sort === "price-high") {
-      products.sort((a, b) => b.price - a.price);
-    } else if (sort === "newest") {
-      products.sort((a, b) => b.id - a.id);
-    } else if (sort === "popular") {
-      products.sort((a, b) => b.rating.rate - a.rating.rate);
-    }
+    if (sort === "price-low") products.sort((a, b) => a.price - b.price);
+    else if (sort === "price-high") products.sort((a, b) => b.price - a.price);
+    else if (sort === "newest") products.sort((a, b) => b.id - a.id);
+    else if (sort === "popular") products.sort((a, b) => b.rating.rate - a.rating.rate);
 
     return products;
-  } catch (error: any) {
-    console.error("Fetch error:", error.message);
+  } catch (error) {
+    console.error("API Fetch Failure on Vercel:", error);
     return [];
   }
 }
-
 export default async function Page({ searchParams }: PageProps) {
   const resolvedParams = await searchParams;
   const sortValue = resolvedParams.sort || "recommended";
